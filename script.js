@@ -1,7 +1,7 @@
 import {
     prepareWithSegments,
     measureNaturalWidth,
-} from './node_modules/@chenglou/pretext/dist/layout.js'
+} from 'https://esm.sh/@chenglou/pretext@0.0.5'
 
 // ── Custom Cursor (disabled on touch) ────────────────────
 
