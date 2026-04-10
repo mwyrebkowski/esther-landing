@@ -137,10 +137,27 @@ html, body {
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 4px;
-    color: #E2BA75; /* Brighter Antique Gold to pop */
+    color: #E2BA75;
     margin-bottom: 24px;
     text-transform: uppercase;
     text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.hero-tagline {
+    font-size: 20px;
+    letter-spacing: 6px;
+}
+
+.tagline-link {
+    color: #E2BA75;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(226, 186, 117, 0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.3s ease;
+}
+
+.tagline-link:hover {
+    border-color: #E2BA75;
 }
 
 .hero-title {
@@ -622,4 +639,123 @@ html, body {
 
 .donate-link:hover {
     opacity: 0.7;
+}
+
+/* ── Touch devices — restore native cursor ──────────────── */
+
+@media (hover: none) {
+    *, *::before, *::after { cursor: auto !important; }
+    .cursor-dot { display: none; }
+}
+
+/* ── Tablet & Mobile (≤768px) ───────────────────────────── */
+
+@media (max-width: 768px) {
+    /* Padding */
+    .navbar { padding: 24px; }
+    .hero-section { padding: 0 24px 40px; }
+    .tour-sticky { padding: 0 24px; }
+    .experience-section { padding: 80px 24px; }
+    .bio-section { padding: 80px 24px; }
+    .support-section { padding: 80px 24px; }
+
+    /* Typography */
+    .brand { font-size: 32px; }
+    .hero-title { font-size: 52px; letter-spacing: -1px; margin-bottom: 20px; }
+    .hero-subtitle { font-size: 20px; max-width: 100%; }
+    .tagline { font-size: 12px; letter-spacing: 3px; margin-bottom: 16px; }
+    .hero-tagline { font-size: 15px; letter-spacing: 4px; }
+    .section-title { font-size: 44px; letter-spacing: -1px; margin-bottom: 20px; }
+    .section-subtitle { font-size: 18px; }
+
+    /* Navbar */
+    .nav-links { gap: 20px; }
+    .nav-link { font-size: 12px; letter-spacing: 0.5px; }
+
+    /* Hero — let content flow */
+    .hero-section-wrapper {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .action-card {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        width: calc(100% - 48px);
+        margin: 0 24px 24px;
+    }
+
+    .footer {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        padding: 24px;
+    }
+
+    /* Tour / TRICK */
+    .tour-left { max-width: 100%; }
+
+    .ascii-globe-container {
+        width: 350px;
+        height: 350px;
+        right: -20%;
+        opacity: 0.3;
+    }
+
+    /* Experience — single column */
+    .experience-header { margin-bottom: 48px; }
+
+    .experience-pillars {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-bottom: 48px;
+    }
+
+    .pillar-title { font-size: 26px; }
+
+    .tour-cities {
+        flex-wrap: wrap;
+        gap: 24px 36px;
+    }
+
+    .city-name { font-size: 18px; }
+
+    /* Bio — stack vertically */
+    .bio-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .bio-photo { aspect-ratio: 16 / 10; }
+    .bio-name { font-size: 36px; }
+    .bio-body { font-size: 15px; }
+    .bio-stats-wrap { margin-top: 40px; }
+
+    /* Donate */
+    .support-headline { font-size: 48px; }
+    .support-body { font-size: 17px; }
+    .donate-link { font-size: 22px; }
+}
+
+/* ── Small phones (≤480px) ──────────────────────────────── */
+
+@media (max-width: 480px) {
+    .hero-title { font-size: 38px; }
+    .hero-subtitle { font-size: 17px; }
+    .section-title { font-size: 34px; }
+    .support-headline { font-size: 34px; }
+    .bio-name { font-size: 28px; }
+    .brand { font-size: 28px; }
+    .nav-links { gap: 14px; }
+    .nav-link { font-size: 10px; }
+    .tour-cities { gap: 20px 28px; }
+    .city-name { font-size: 16px; }
+
+    .ascii-globe-container {
+        width: 260px;
+        height: 260px;
+        right: -30%;
+    }
 }

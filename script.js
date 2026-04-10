@@ -3,28 +3,33 @@ import {
     measureNaturalWidth,
 } from './node_modules/@chenglou/pretext/dist/layout.js'
 
-// ── Custom Cursor ────────────────────────────────────────
+// ── Custom Cursor (disabled on touch) ────────────────────
 
 const dot = document.getElementById('cursor')
-const hoverTargets = document.querySelectorAll('.hover-target')
+const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
-let mouseX = window.innerWidth / 2
-let mouseY = window.innerHeight / 2
+if (!isTouch) {
+    const hoverTargets = document.querySelectorAll('.hover-target')
+    let mouseX = window.innerWidth / 2
+    let mouseY = window.innerHeight / 2
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX
-    mouseY = e.clientY
-    dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`
-})
-
-hoverTargets.forEach(target => {
-    target.addEventListener('mouseenter', () => {
-        dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%)) scale(2)`
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX
+        mouseY = e.clientY
+        dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`
     })
-    target.addEventListener('mouseleave', () => {
-        dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%)) scale(1)`
+
+    hoverTargets.forEach(target => {
+        target.addEventListener('mouseenter', () => {
+            dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%)) scale(2)`
+        })
+        target.addEventListener('mouseleave', () => {
+            dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%)) scale(1)`
+        })
     })
-})
+} else {
+    dot.style.display = 'none'
+}
 
 // ── ASCII Rotating Globe ─────────────────────────────────
 
@@ -165,9 +170,12 @@ loadMaskAndInit()
  *  ASCII globe stays on right side throughout
  * ───────────────────────────────────────────────────────── */
 
-const TRICK_FONT = '76px "Instrument Serif", serif'
-const TRICK_LINE_HEIGHT = 92
 const TRICK_WORDS = ['TRUST', 'RESPECT', 'INDEPENDENCE', 'COLLABORATION', 'KINDNESS']
+
+function trickFontSize() { return window.innerWidth < 768 ? 42 : 76 }
+function trickFont() { return `${trickFontSize()}px "Instrument Serif", serif` }
+function trickLineHeight() { return Math.round(trickFontSize() * 1.21) }
+let lastTrickSize = 0
 
 const SCROLL = {
     wordStart:    0.05,   // first word begins expanding
@@ -188,10 +196,12 @@ const tourSection = document.querySelector('.tour-section')
 let trickWords = null // measured word data from pretext
 
 function measureWords() {
+    lastTrickSize = trickFontSize()
+    const font = trickFont()
     trickWords = TRICK_WORDS.map(word => {
         const chars = [...word]
         // Use pretext to measure each character precisely
-        const widths = chars.map(ch => measureNaturalWidth(prepareWithSegments(ch, TRICK_FONT)))
+        const widths = chars.map(ch => measureNaturalWidth(prepareWithSegments(ch, font)))
 
         // Accumulate x positions
         const positions = []
@@ -208,8 +218,9 @@ function measureWords() {
 function sizeTrickCanvas() {
     if (!trickCanvas || !trickCtx) return
     const dpr = window.devicePixelRatio || 1
-    const w = 680
-    const h = TRICK_WORDS.length * TRICK_LINE_HEIGHT + 8
+    const containerW = trickCanvas.parentElement?.clientWidth || 680
+    const w = Math.min(680, containerW)
+    const h = TRICK_WORDS.length * trickLineHeight() + 8
     trickCanvas.width = w * dpr
     trickCanvas.height = h * dpr
     trickCanvas.style.width = w + 'px'
@@ -232,17 +243,18 @@ function renderTRICK() {
     if (!trickWords || !trickCtx) return
 
     const progress = scrollProgress()
-    const W = 680
-    const H = TRICK_WORDS.length * TRICK_LINE_HEIGHT + 8
+    const lh = trickLineHeight()
+    const W = parseFloat(trickCanvas.style.width) || 680
+    const H = TRICK_WORDS.length * lh + 8
 
     trickCtx.clearRect(0, 0, W, H)
-    trickCtx.font = TRICK_FONT
+    trickCtx.font = trickFont()
     trickCtx.textBaseline = 'alphabetic'
     trickCtx.textAlign = 'left'
 
     for (let wi = 0; wi < trickWords.length; wi++) {
         const word = trickWords[wi]
-        const baseY = (wi + 1) * TRICK_LINE_HEIGHT
+        const baseY = (wi + 1) * lh
 
         // How expanded is this word? 0 = just initial letter, 1 = fully revealed
         const wStart = SCROLL.wordStart + wi * SCROLL.wordStep
@@ -325,6 +337,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true })
 
 window.addEventListener('resize', () => {
+    if (trickFontSize() !== lastTrickSize) measureWords()
     sizeTrickCanvas()
     renderTRICK()
 })
@@ -397,8 +410,9 @@ const BIO = {
     stats: 800,
 }
 
-const STAT_NUM_FONT  = '64px "Instrument Serif", serif'
-const STAT_LBL_FONT  = '600 12px Geist, system-ui, sans-serif'
+function statNumFont() { return `${window.innerWidth < 768 ? 40 : 64}px "Instrument Serif", serif` }
+function statLblFont() { return `600 ${window.innerWidth < 768 ? 10 : 12}px Geist, system-ui, sans-serif` }
+let lastStatSize = 0
 const STATS_DATA = [
     { number: '600+',  label: 'STUDENTS' },
     { number: '9',     label: 'PUBLICATIONS' },
@@ -410,10 +424,12 @@ const statsCtx = statsCanvas?.getContext('2d')
 let measuredStats = null
 
 function measureStatsPretext() {
+    lastStatSize = window.innerWidth < 768 ? 40 : 64
+    const font = statNumFont()
     measuredStats = STATS_DATA.map(stat => {
         const chars = [...stat.number]
         const charWidths = chars.map(ch =>
-            measureNaturalWidth(prepareWithSegments(ch, STAT_NUM_FONT))
+            measureNaturalWidth(prepareWithSegments(ch, font))
         )
         const positions = []
         let cx = 0
@@ -451,7 +467,7 @@ function renderStats() {
         const numX = colCenter - stat.numWidth / 2
 
         // Number — per-character rendering (pretext-measured positions)
-        statsCtx.font = STAT_NUM_FONT
+        statsCtx.font = statNumFont()
         statsCtx.textBaseline = 'alphabetic'
         statsCtx.textAlign = 'left'
         statsCtx.fillStyle = '#E2BA75'
@@ -460,7 +476,7 @@ function renderStats() {
         }
 
         // Label
-        statsCtx.font = STAT_LBL_FONT
+        statsCtx.font = statLblFont()
         statsCtx.textAlign = 'center'
         statsCtx.textBaseline = 'top'
         statsCtx.fillStyle = 'rgba(240, 237, 231, 0.45)'
@@ -496,6 +512,8 @@ if (bioSection) {
 }
 
 window.addEventListener('resize', () => {
+    const newStatSize = window.innerWidth < 768 ? 40 : 64
+    if (newStatSize !== lastStatSize) measureStatsPretext()
     sizeStatsCanvas()
     renderStats()
 })
