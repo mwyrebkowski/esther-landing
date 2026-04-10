@@ -13,60 +13,181 @@
 <body>
     <!-- Custom Cursor -->
     <div id="cursor" class="cursor-dot"></div>
-    <div id="cursor-trail" class="cursor-trail"></div>
 
     <!-- Cinematic Noise Overlay -->
     <div class="noise-overlay"></div>
 
 
 
-    <!-- UI Overlay -->
+    <!-- UI Overlay container -->
     <div class="ui-layer">
-        <nav class="navbar">
-            <div class="brand serif">Esther.</div>
-            <div class="nav-links">
-                <a href="#film" class="nav-link hover-target">The Film</a>
-                <a href="#tour" class="nav-link hover-target">The Tour</a>
-                <a href="#contact" class="nav-link hover-target">Contact</a>
-            </div>
-        </nav>
+        
+        <!-- Section 1: Hero -->
+        <section class="hero-section-wrapper">
+            <nav class="navbar">
+                <div class="brand serif">Esther.</div>
+                <div class="nav-links">
+                    <a href="#film" class="nav-link hover-target">The Film</a>
+                    <a href="#tour" class="nav-link hover-target">The Tour</a>
+                    <a href="#contact" class="nav-link hover-target">Contact</a>
+                </div>
+            </nav>
 
-        <main class="hero-section">
-            <div class="hero-content">
-                <h2 class="tagline">THIS IS THE WORLD PRESENTS</h2>
-                <h1 class="hero-title serif">
-                    The Godmother of <br>Silicon Valley.
-                </h1>
-                <p class="hero-subtitle">
-                    A film on a screen is powerful. <br>Esther in a room is transformative.
+            <main class="hero-section">
+                <div class="hero-content">
+                    <h2 class="tagline">THIS IS THE WORLD PRESENTS</h2>
+                    <h1 class="hero-title serif">
+                        The Godmother of <br>Silicon Valley.
+                    </h1>
+                    <p class="hero-subtitle">
+                        A film on a screen is powerful. <br>Esther in a room is transformative.
+                    </p>
+                </div>
+            </main>
+
+            <!-- Lower Right Floating Card -->
+            <div class="action-card hover-target-container">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#F0EDE7"/>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h3>Presidio Theater Screening</h3>
+                    <p>April 16, San Francisco. The World Premiere.</p>
+                </div>
+                <a href="#" class="card-link hover-target">Get Tickets &rarr;</a>
+                <div class="card-footer">General Admission &bull; SOLD OUT</div>
+            </div>
+
+            <footer class="footer">
+                <div class="footer-left">&copy;2026 This is the World. All rights reserved.</div>
+                <div class="footer-right">
+                    <a href="press.html" class="hover-target">Press</a>
+                    <a href="mailto:michal.wyrebkowski@thisisit.edu.pl" class="hover-target">Contact</a>
+                </div>
+            </footer>
+        </section>
+
+        <!-- Section 2: TRICK Method → World Tour (scroll-driven, pretext-powered) -->
+        <section id="tour" class="tour-section">
+            <div class="tour-sticky">
+                <div class="tour-left">
+                    <!-- TRICK: canvas rendered with per-char measurement via @chenglou/pretext -->
+                    <div class="trick-container">
+                        <h2 class="tagline">THE TRICK METHOD</h2>
+                        <canvas id="trick-canvas"></canvas>
+                    </div>
+                    <!-- World Tour (crossfades in after TRICK) -->
+                    <div class="tour-content">
+                        <h2 class="tagline">DISTRIBUTION STRATEGY</h2>
+                        <h1 class="section-title serif">The World Tour</h1>
+                        <p class="section-subtitle">
+                            Six cities. Three continents. Taking the documentary directly to educators and parents worldwide in an intimate, interactive experience.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="ascii-globe-container">
+                    <canvas id="ascii-globe"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Experience — what happens at each stop -->
+        <section class="experience-section">
+            <div class="experience-inner">
+                <div class="experience-header">
+                    <h2 class="tagline">THE EXPERIENCE</h2>
+                    <h1 class="section-title serif">Film. Method.<br>Movement.</h1>
+                    <p class="section-subtitle">
+                        Each evening brings Esther's documentary and her TRICK methodology to life — a night of film, education, and community that leaves a city changed.
+                    </p>
+                </div>
+
+                <div class="experience-pillars">
+                    <div class="pillar" data-index="0">
+                        <div class="pillar-number">01</div>
+                        <h3 class="pillar-title serif">The Screening</h3>
+                        <p class="pillar-desc">The full documentary — Esther's journey from journalist to the most influential educator in Silicon Valley. How one teacher raised three CEOs and changed millions of lives.</p>
+                    </div>
+                    <div class="pillar" data-index="1">
+                        <div class="pillar-number">02</div>
+                        <h3 class="pillar-title serif">The Workshop</h3>
+                        <p class="pillar-desc">A hands-on TRICK session led by Esther herself. Trust, Respect, Independence, Collaboration, Kindness — not as theory, but as practice you take home.</p>
+                    </div>
+                    <div class="pillar" data-index="2">
+                        <div class="pillar-number">03</div>
+                        <h3 class="pillar-title serif">The Conversation</h3>
+                        <p class="pillar-desc">An intimate fireside Q&A. Parents, educators, and founders in dialogue with the Godmother of Silicon Valley. The part people remember most.</p>
+                    </div>
+                </div>
+
+                <div class="tour-cities">
+                    <div class="city" data-index="0">
+                        <span class="city-name serif">San Francisco</span>
+                        <span class="city-date">Apr 16</span>
+                        <span class="city-venue">Presidio Theater</span>
+                    </div>
+                    <div class="city" data-index="1">
+                        <span class="city-name serif">Washington DC</span>
+                        <span class="city-date">Apr 26</span>
+                    </div>
+                    <div class="city" data-index="2">
+                        <span class="city-name serif">Berlin</span>
+                        <span class="city-date">TBD</span>
+                    </div>
+                    <div class="city" data-index="3">
+                        <span class="city-name serif">Warsaw</span>
+                        <span class="city-date">TBD</span>
+                    </div>
+                    <div class="city" data-index="4">
+                        <span class="city-name serif">Hong Kong</span>
+                        <span class="city-date">TBD</span>
+                    </div>
+                    <div class="city" data-index="5">
+                        <span class="city-name serif italic">Your City</span>
+                        <span class="city-date"><a href="#contact" class="city-contact hover-target">Contact Us</a></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Section: Esther Bio -->
+        <section class="bio-section">
+            <div class="bio-grid">
+                <div class="bio-photo-wrap">
+                    <img src="esther-photo.webp" alt="Esther Wojcicki" class="bio-photo" />
+                </div>
+                <div class="bio-text">
+                    <h2 class="tagline">ABOUT ESTHER</h2>
+                    <h1 class="bio-name serif">Esther Wojcicki</h1>
+                    <p class="bio-body">Leading American educator, journalist, and mother. Founder of the Media Arts program at Palo Alto High School — from 20 students in 1984 to over 600, with nine award-winning publications and one of the largest journalism programs in the nation.</p>
+                    <p class="bio-body">Vice Chair of Creative Commons. Instrumental in shaping GoogleEdu since its inception. California Teacher of the Year. Advisor to the U.S. Department of Education, Carnegie Foundation, Hewlett Foundation, and Time Magazine.</p>
+                </div>
+            </div>
+            <div class="bio-stats-wrap">
+                <canvas id="stats-canvas"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 4: Support / Donate -->
+        <section class="support-section">
+            <div class="support-inner">
+                <h2 class="tagline">SUPPORT THE TOUR</h2>
+                <h1 class="support-headline serif">Bring Esther<br>to the World.</h1>
+                <p class="support-body">
+                    The World Tour is funded through donations to <strong>Moonshots in Education</strong>, Esther Wojcicki's foundation. Your contribution directly funds bringing the film, the workshops, and the movement to cities around the globe.
                 </p>
+                <a href="https://moonshotsineducation.org/donate" target="_blank" rel="noopener" class="donate-link hover-target serif">
+                    Donate to Moonshots in Education &rarr;
+                </a>
             </div>
-        </main>
+        </section>
 
-        <!-- Lower Right Floating Card (Inspired by sauna.ai) -->
-        <div class="action-card hover-target-container">
-            <div class="card-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" fill="#F0EDE7"/>
-                </svg>
-            </div>
-            <div class="card-text">
-                <h3>Presidio Theater Screening</h3>
-                <p>April 16, San Francisco. The World Premiere.</p>
-            </div>
-            <button class="primary-btn hover-target">Get Tickets &rarr;</button>
-            <div class="card-footer">General Admission &bull; SOLD OUT</div>
-        </div>
-
-        <footer class="footer">
-            <div class="footer-left">&copy;2026 This is the World. All rights reserved.</div>
-            <div class="footer-right">
-                <a href="#" class="hover-target">Press</a>
-                <a href="#" class="hover-target">Privacy</a>
-            </div>
-        </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
